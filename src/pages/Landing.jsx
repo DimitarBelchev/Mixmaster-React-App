@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const searchCocktailsQuery = (searchTerm) => {
   return {
-    queryKey: ["search", searchTerm || "all"],
+    queryKey: ["search", searchTerm || "cocktail"],
     queryFn: async () => {
       const response = await axios.get(`${cocktailSearchUrl}${searchTerm}`);
       return response.data.drinks;
@@ -22,7 +22,7 @@ export const loader =
   async ({ request }) => {
     const url = new URL(request.url);
 
-    const searchTerm = url.searchParams.get("search") || "all";
+    const searchTerm = url.searchParams.get("search") || "cocktail";
     await queryClient.ensureQueryData(searchCocktailsQuery(searchTerm));
     return { searchTerm };
   };
